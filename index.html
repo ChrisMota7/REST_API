@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gatos aleatorios</title>
+    <style>
+        #title{
+            display: flex;
+            text-align: center;
+        }
+        #gatoContainer {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        #gatoContainer img {
+            width: 200px; /* Tamaño deseado para todas las imágenes */
+            height: 200px; /* Altura ajustada automáticamente */
+            margin: 5px; /* Espacio entre las imágenes */
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1 id="title">GATOS ALEATORIOS</h1>
+        <div id="gatoContainer"></div>
+        <script>
+            const url = "https://api.thecatapi.com/v1/images/search";
+            const gatoContainer = document.getElementById('gatoContainer');
+
+            async function obtenerGatos() {
+                try {
+                    for (let i = 0; i < 45; i++) {
+                        const response = await fetch(url);
+                        const data = await response.json();
+                        mostrarGato(data[0].url);
+                    }
+                } catch (error) {
+                    console.error('Error al obtener gatos:', error);
+                }
+            }
+
+            function mostrarGato(url) {
+                const img = document.createElement('img');
+                img.src = url;
+                img.alt = 'Foto Gato';
+                gatoContainer.appendChild(img);
+            }
+
+            obtenerGatos();
+        </script>
+    </div>
+</body>
+</html>
